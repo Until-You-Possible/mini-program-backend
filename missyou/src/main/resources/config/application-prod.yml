@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql:http://localhost:3306/testMissyou?characterEncoding=utf-8&serverTimeZone=GMT%2B8
+    username: root
+    password: dyh18215153215
