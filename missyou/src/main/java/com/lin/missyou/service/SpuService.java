@@ -1,6 +1,7 @@
 package com.lin.missyou.service;
 
 
+import com.lin.missyou.bo.PageCounter;
 import com.lin.missyou.model.Spu;
 import com.lin.missyou.repository.SpuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,8 @@ public class SpuService {
         return  this.spuRepository.findOneById(id);
     }
 
-    public Page<Spu> getLatestPagingSpu(Integer pageNum, Integer pageSize) {
-        Pageable page =PageRequest.of(pageNum, pageSize, Sort.by("createTime").descending());
+    public Page<Spu> getLatestPagingSpu(Integer pageNum, Integer size) {
+        Pageable page = PageRequest.of(pageNum, size, Sort.by("createTime").descending());
         return this.spuRepository.findAll(page);
     }
-
 }
