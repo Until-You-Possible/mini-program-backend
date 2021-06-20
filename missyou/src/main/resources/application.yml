@@ -12,3 +12,10 @@ spring:
 
 missyou:
   api-package: com.lin.missyou.api
+
+server:
+  servlet:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
