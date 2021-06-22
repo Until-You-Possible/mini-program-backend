@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.SimpleFormatter;
 
+
 @RestController
 @RequestMapping("/spu")
 @Validated
@@ -31,7 +32,7 @@ public class spuController {
     private SpuService spuService;
 
     @GetMapping("/id/{id}/detail")
-    public Spu getDetail(@PathVariable Long id) {
+    public Spu getDetail(@PathVariable  Long id) {
         Spu spu = spuService.getSpu(id);
         if (spu == null) {
             throw new NotFoundException(30003);
@@ -40,7 +41,7 @@ public class spuController {
     }
 
     @GetMapping("/id/{id}/simplify")
-    public SpuSimplifyVO getSimplifySpu (@PathVariable Long id) {
+    public SpuSimplifyVO getSimplifySpu (@PathVariable Long  id) {
         Spu spu = this.spuService.getSpu(id);
         SpuSimplifyVO vo = new SpuSimplifyVO();
         BeanUtils.copyProperties(spu, vo);

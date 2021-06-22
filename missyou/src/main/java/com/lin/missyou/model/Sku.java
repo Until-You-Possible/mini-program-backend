@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,7 +24,7 @@ public class Sku {
     private String img;
     private String title;
     private Long spuId;
-    private String specs;
+    private List<Spec> specs;
     private String code;
     private Long stock;
     private Long categoryId;
