@@ -1,12 +1,11 @@
 package com.lin.missyou.model;
 
+import com.lin.missyou.util.ListAndJon;
+import com.lin.missyou.util.MapAndJson;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
@@ -25,8 +24,10 @@ public class Sku {
     private String img;
     private String title;
     private Long spuId;
-    private Map<String, Object> test;
-    private String specs;
+
+
+    @Convert(converter = ListAndJon.class)
+    private List<Object> specs;
     private String code;
     private Long stock;
     private Long categoryId;

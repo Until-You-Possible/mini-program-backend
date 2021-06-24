@@ -1,6 +1,5 @@
 package com.lin.missyou.util;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lin.missyou.exception.Http.ServerErrorException;
@@ -8,21 +7,17 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
-import java.util.Map;
+import java.util.List;
 
-//java实体的类型
-// 数据类型？
-@Converter
-public class MapAndJson implements AttributeConverter<Map<String, Object>, String> {
+public class ListAndJon implements AttributeConverter<List<Object>, String> {
 
     @Autowired
     private ObjectMapper mapper;
 
     @Override
-    public String convertToDatabaseColumn(Map<String, Object> stringObjectMap) {
+    public String convertToDatabaseColumn(List<Object> objects) {
         try {
-            return mapper.writeValueAsString(stringObjectMap);
+            return mapper.writeValueAsString(objects);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             throw new ServerErrorException(9999);
@@ -31,12 +26,17 @@ public class MapAndJson implements AttributeConverter<Map<String, Object>, Strin
 
     @Override
     @SuppressWarnings("unchecked")
-    public Map<String, Object> convertToEntityAttribute(String s) {
+    public List<Object> convertToEntityAttribute(String s) {
         try {
-            return mapper.readValue(s, HashedMap.class);
+            if (s == null) {
+                return null;
+            }
+            List<Object> t = mapper.readValue(s, List.class);
+            return t;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             throw new ServerErrorException(9999);
         }
     }
+
 }
