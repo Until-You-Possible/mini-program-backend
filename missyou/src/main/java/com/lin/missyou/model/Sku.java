@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Entity
@@ -24,7 +25,8 @@ public class Sku {
     private String img;
     private String title;
     private Long spuId;
-    private List<Spec> specs;
+    private Map<String, Object> test;
+    private String specs;
     private String code;
     private Long stock;
     private Long categoryId;
