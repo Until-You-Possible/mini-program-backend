@@ -1,5 +1,6 @@
 package com.lin.missyou.model;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.lin.missyou.util.GenericAndJson;
 import com.lin.missyou.util.ListAndJon;
 import com.lin.missyou.util.MapAndJson;
@@ -30,7 +31,8 @@ public class Sku {
         if (this.specs == null) {
            return Collections.emptyList();
         }
-        return GenericAndJson.jsonToObject(this.specs);
+        return GenericAndJson.jsonToObject(this.specs, new TypeReference<List<Spec>>() {
+        });
     }
 
     public void setSpecs(List<Spec> specs) {
