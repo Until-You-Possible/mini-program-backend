@@ -18,7 +18,10 @@ public class CategoryPureVO {
 
     private Long parentId;
 
+    private Long index;
+
     public CategoryPureVO(Category category) {
         BeanUtils.copyProperties(category, this);
     }
 }
+
