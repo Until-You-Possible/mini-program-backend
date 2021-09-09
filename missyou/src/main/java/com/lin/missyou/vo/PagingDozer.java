@@ -20,8 +20,6 @@ public class PagingDozer<T, K> extends Paging {
             voList.add(vo);
         });
         this.setItems(voList);
-
-
     }
 
 }

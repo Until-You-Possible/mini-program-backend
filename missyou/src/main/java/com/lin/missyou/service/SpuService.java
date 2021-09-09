@@ -33,8 +33,7 @@ public class SpuService {
         if (isRoot) {
             return  this.spuRepository.findByRootCategoryIdOrderByCreateTime(cid, page);
         }
-        else
-        {
+        else {
             return  this.spuRepository.findByCategoryIdOrderByCreateTimeDesc(cid, page);
         }
     }
