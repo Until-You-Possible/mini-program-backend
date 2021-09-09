@@ -1,6 +1,7 @@
 package com.lin.missyou.api.v1;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
+import com.lin.missyou.exception.Http.NotFoundException;
 import com.lin.missyou.model.Theme;
 import com.lin.missyou.service.ThemeService;
 import com.lin.missyou.vo.ThemePureVO;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("theme")
@@ -31,6 +33,12 @@ public class ThemeController {
             list.add(vo);
         });
         return list;
+    }
+
+    // with_spu接口
+    public Theme getThemeByNameWithSpu(@PathVariable(name = "name") String themeName) {
+        Optional<Theme> optionalTheme = themeService.findByName(themeName);
+        return optionalTheme.orElseThrow(() -> new NotFoundException(30003));
     }
 
 
