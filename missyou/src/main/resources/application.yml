@@ -22,8 +22,8 @@ server:
 
 
 wx:
-  appid: wx0d1cc0de3e7e3d53
-  appsecret: b8177e8cd7a7dc411576e49124270025
+  appid:
+  appsecret:
   code2session: https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code=JSCODE&grant_type=authorization_code
 
 
