@@ -3,6 +3,8 @@ package com.lin.missyou.api.v1;
 
 import com.lin.missyou.dto.TokenDTO;
 import com.lin.missyou.exception.Http.NotFoundException;
+import com.lin.missyou.service.WxAuthenticationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,18 +18,23 @@ import java.util.Map;
 @RequestMapping(value = "token")
 public class TokenController {
 
+    @Autowired
+    private WxAuthenticationService wxAuthenticationService;
+
     @PostMapping("/getToken")
-    public Map<String, String> getToken(@RequestBody @Validated TokenDTO useData) {
+    public Map<String, String> getToken(@RequestBody TokenDTO useData) {
         Map<String, String> map = new HashMap<>();
         String token = null;
-        switch (useData.getLoginType()) {
+        switch (useData.getType()) {
             case USER_WX:
+                wxAuthenticationService.code2Session(useData.getAccount());
                 break;
             case USER_Email:
                 break;
             default:
                 throw new NotFoundException(10003);
         }
+        return null;
     }
 
 

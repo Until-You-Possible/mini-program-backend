@@ -15,5 +15,5 @@ public class TokenDTO {
     private String account;
     @TokenPassword(min = 6, max = 30, message = "{token.password}")
     private String password;
-    private LoginType loginType;
+    private LoginType type;
 }
