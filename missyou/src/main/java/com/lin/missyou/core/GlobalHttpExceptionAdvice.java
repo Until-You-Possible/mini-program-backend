@@ -37,6 +37,10 @@ public class GlobalHttpExceptionAdvice {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpStatus httpStatus  = HttpStatus.resolve(e.getHttpStatusCode());
         UnifyResponse unifyResponse = new UnifyResponse(e.getCode(), codeConfiguration.getMessage(e.getCode()), method + " " + url);
+        if (httpStatus == null) {
+            return new ResponseEntity<>(unifyResponse, httpHeaders, 500);
+        }
         return new ResponseEntity<>(unifyResponse, httpHeaders, httpStatus);
+
     }
 }

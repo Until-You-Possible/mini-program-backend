@@ -1,14 +1,16 @@
 package com.lin.missyou.util;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.Verification;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 @Component
@@ -34,6 +36,21 @@ public class JwtToken {
     public static String makeToken(Long uid) {
         return JwtToken.getToken(uid, JwtToken.defaultScope);
     }
+
+    public static Optional<Map<String, Claim>> getClaim(String token) {
+        DecodedJWT decodedJWT;
+        Algorithm algorithm = Algorithm.HMAC256(JwtToken.jwtKey);
+        Verification jwtVerifier = JWT.require(algorithm);
+        try {
+            decodedJWT = jwtVerifier.build().verify(token);
+        }
+        catch (JWTVerificationException e) {
+            return Optional.empty();
+        }
+        return Optional.of(decodedJWT.getClaims());
+    }
+
+
     public static String getToken(Long uid, Integer scoped) {
         // jjwt
         //auth0
