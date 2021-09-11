@@ -27,14 +27,15 @@ public class TokenController {
         String token = null;
         switch (useData.getType()) {
             case USER_WX:
-                wxAuthenticationService.code2Session(useData.getAccount());
+                token = wxAuthenticationService.code2Session(useData.getAccount());
                 break;
             case USER_Email:
                 break;
             default:
                 throw new NotFoundException(10003);
         }
-        return null;
+        map.put("token", token);
+        return map;
     }
 
 
