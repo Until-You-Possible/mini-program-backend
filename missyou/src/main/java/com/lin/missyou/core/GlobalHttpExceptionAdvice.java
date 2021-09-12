@@ -3,6 +3,7 @@ package com.lin.missyou.core;
 import com.lin.missyou.core.configuration.ExceptionCodeConfiguration;
 import com.lin.missyou.exception.Http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,18 +30,18 @@ public class GlobalHttpExceptionAdvice {
         return new UnifyResponse(9999, "server error", method + "" + url);
     }
 
-    @ExceptionHandler(value = HttpException.class)
-    public ResponseEntity<UnifyResponse> handleHttpException(HttpServletRequest request, HttpException e) {
-        String url = request.getRequestURI();
-        String method = request.getMethod();
-        HttpHeaders httpHeaders  = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpStatus httpStatus  = HttpStatus.resolve(e.getHttpStatusCode());
-        UnifyResponse unifyResponse = new UnifyResponse(e.getCode(), codeConfiguration.getMessage(e.getCode()), method + " " + url);
+    @ExceptionHandler(HttpException.class)
+    public ResponseEntity<UnifyResponse> handleHttpException(HttpServletRequest req, HttpException e){
+        String requestUrl = req.getRequestURI();
+        String method = req.getMethod();
+        UnifyResponse message = new UnifyResponse(e.getCode(),codeConfiguration.getMessage(e.getCode()), method + " " + requestUrl);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpStatus httpStatus = HttpStatus.resolve(e.getHttpStatusCode());
         if (httpStatus == null) {
-            return new ResponseEntity<>(unifyResponse, httpHeaders, 500);
+            return new ResponseEntity<>(message, headers, 500);
         }
-        return new ResponseEntity<>(unifyResponse, httpHeaders, httpStatus);
-
+        return new ResponseEntity<>(message, headers, httpStatus);
     }
+
 }

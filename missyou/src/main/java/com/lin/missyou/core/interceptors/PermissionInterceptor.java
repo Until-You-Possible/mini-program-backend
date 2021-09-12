@@ -29,15 +29,19 @@ public class PermissionInterceptor implements AsyncHandlerInterceptor {
             return true;
         }
         String token = this.getToken(request);
-        if(StringUtils.hasLength(token)) {
+        if(!StringUtils.hasLength(token)) {
             throw new UnAuthenticatedException(10004);
         }
         // 标准 Bearer 开头
         if (!token.startsWith("Bearer")) {
             throw new UnAuthenticatedException(10004);
         }
+        String[] splitToken = token.split(" ");
+        if (!(splitToken.length ==2)) {
+            throw new UnAuthenticatedException(10004);
+        }
         // 提取token
-        String realToken = token.split(" ")[1];
+        String realToken = splitToken[1];
         Optional<Map<String, Claim>> optionalStringClaimMap = JwtToken.getClaim(realToken);
         Map<String, Claim> map = optionalStringClaimMap.orElseThrow(() -> new UnAuthenticatedException(10004));
         Boolean valid = this.hasPermission(scopeLevel.get(), map);
