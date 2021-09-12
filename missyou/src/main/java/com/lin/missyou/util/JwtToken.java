@@ -64,6 +64,18 @@ public class JwtToken {
                 .sign(algorithm);
     }
 
+    // verify token
+    public static Boolean verifyToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(JwtToken.jwtKey);
+            JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+            jwtVerifier.verify(token);
+        } catch (JWTVerificationException e) {
+            return false;
+        }
+        return true;
+    }
+
     private static Map<String, Date> calculateExpiredIssues() {
         Map<String, Date> map = new HashMap<>();
         Calendar calendar = Calendar.getInstance();

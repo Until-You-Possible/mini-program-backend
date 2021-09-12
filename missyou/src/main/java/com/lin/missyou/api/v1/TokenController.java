@@ -2,8 +2,10 @@ package com.lin.missyou.api.v1;
 
 
 import com.lin.missyou.dto.TokenDTO;
+import com.lin.missyou.dto.VerifyTokenDTO;
 import com.lin.missyou.exception.Http.NotFoundException;
 import com.lin.missyou.service.WxAuthenticationService;
+import com.lin.missyou.util.JwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +37,16 @@ public class TokenController {
                 throw new NotFoundException(10003);
         }
         map.put("token", token);
+        return map;
+    }
+
+    // 验证token
+    @PostMapping("/verify")
+    public Map<String, Boolean> verifyToken(@RequestBody VerifyTokenDTO tokenDTO) {
+        // 去验证前端传过来的token
+        String token = tokenDTO.getToken();
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("is_valid", JwtToken.verifyToken(token));
         return map;
     }
 
