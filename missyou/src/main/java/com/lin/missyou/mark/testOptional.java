@@ -1,12 +1,10 @@
-package com.lin.missyou.test;
+package com.lin.missyou.mark;
 
 
 // 关于optional
 // optional类是Java8的新特性 可以理解是一个为null的对象，如果值存在 则isPresent() 方法返回true, 条用get()方法会返回该对象。
 // optional是个容器，可以保存类型T的值，或者仅仅保存null，不用显示的检测空值，很好的解决了空指针的异常
 
-
-import java.util.Optional;
 
 public class testOptional {
     // 访问optional的值
