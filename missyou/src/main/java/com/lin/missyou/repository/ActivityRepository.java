@@ -10,6 +10,6 @@ public interface ActivityRepository extends JpaRepository<Activity, Long> {
     Activity findByName(String name);
 
     // 根据优惠券id查询对应的优惠券
-    Optional<Activity> findbyCouponListId(Long couponId);
+    Optional<Activity> findByCouponListId(Long couponId);
 
 }
