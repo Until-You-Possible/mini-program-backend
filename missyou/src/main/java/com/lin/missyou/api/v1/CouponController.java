@@ -6,6 +6,7 @@ import com.lin.missyou.core.interceptors.ScopeLevel;
 import com.lin.missyou.model.Coupon;
 import com.lin.missyou.model.User;
 import com.lin.missyou.service.CouponService;
+import com.lin.missyou.vo.CouponCategoryVO;
 import com.lin.missyou.vo.CouponPureVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
