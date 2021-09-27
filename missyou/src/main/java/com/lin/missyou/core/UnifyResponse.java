@@ -1,9 +1,15 @@
 package com.lin.missyou.core;
 
+import com.lin.missyou.exception.Http.CreateSuccess;
+
 public class UnifyResponse {
 
     private int code;
 
+
+    public static void createSuccess(int code) {
+        throw new CreateSuccess(code);
+    }
     public int getCode() {
         return code;
     }
