@@ -1,6 +1,7 @@
 package com.lin.missyou.api.v1;
 
 
+import com.lin.missyou.core.LocalUser;
 import com.lin.missyou.core.UnifyResponse;
 import com.lin.missyou.core.interceptors.ScopeLevel;
 import com.lin.missyou.model.Coupon;
@@ -52,28 +53,28 @@ public class CouponController {
         UnifyResponse.createSuccess(0);
     }
 
-    @ScopeLevel
-    @GetMapping("/myself/by/status/{status}")
-    public List<CouponPureVO> getMyCouponByStatus(@PathVariable Integer status) {
-        Long uid = LocalUser.getUser().getId();
-        List<Coupon> couponList;
-
-        //触发机制 时机 过期
-        switch (CouponStatus.toType(status)) {
-            case AVAILABLE:
-                couponList = couponService.getMyAvailableCoupons(uid);
-                break;
-            case USED:
-                couponList = couponService.getMyUsedCoupons(uid);
-                break;
-            case EXPIRED:
-                couponList = couponService.getMyExpiredCoupons(uid);
-                break;
-            default:
-                throw new ParameterException(40001);
-        }
-        return CouponPureVO.getList(couponList);
-    }
+//    @ScopeLevel
+//    @GetMapping("/myself/by/status/{status}")
+//    public List<CouponPureVO> getMyCouponByStatus(@PathVariable Integer status) {
+//        Long uid = LocalUser.getUser().getId();
+//        List<Coupon> couponList;
+//
+//        //触发机制 时机 过期
+//        switch (CouponStatus.toType(status)) {
+//            case AVAILABLE:
+//                couponList = couponService.getMyAvailableCoupons(uid);
+//                break;
+//            case USED:
+//                couponList = couponService.getMyUsedCoupons(uid);
+//                break;
+//            case EXPIRED:
+//                couponList = couponService.getMyExpiredCoupons(uid);
+//                break;
+//            default:
+//                throw new ParameterException(40001);
+//        }
+//        return CouponPureVO.getList(couponList);
+//    }
 
     @ScopeLevel()
     @GetMapping("/myself/available/with_category")
@@ -83,9 +84,6 @@ public class CouponController {
         if (coupons.isEmpty()) {
             return Collections.emptyList();
         }
-        return coupons.stream().map(coupon -> {
-            CouponCategoryVO vo = new CouponCategoryVO(coupon);
-            return vo;
-        }).collect(Collectors.toList());
+        return coupons.stream().map(CouponCategoryVO::new).collect(Collectors.toList());
     }
 }

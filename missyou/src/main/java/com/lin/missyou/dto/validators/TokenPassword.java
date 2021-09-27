@@ -10,7 +10,6 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE, ElementType.FIELD})
 @Constraint(validatedBy = TokenPasswordValidator.class)
 public @interface TokenPassword {
-    // 定义注解可以接受的参数
     String message() default "字段不符合要求";
     int min() default 0;
     int max() default 8;

@@ -26,7 +26,7 @@ import java.util.logging.SimpleFormatter;
 @RestController
 @RequestMapping("/spu")
 @Validated
-public class spuController {
+public class SpuController {
 
     @Autowired
     private SpuService spuService;

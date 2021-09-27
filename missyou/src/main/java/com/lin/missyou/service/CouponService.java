@@ -34,6 +34,11 @@ public class CouponService {
         return couponRepository.findByWholeStore(true, now);
     }
 
+    public void collectOneCoupon(Long uid, Long couponId) {
+        // 查询一次数据库 检验couponId是否对应一张优惠券
+        this.couponRepository.findById(couponId).orElseThrow(() -> new NotFoundException(40005));
+    }
+
     public List<Coupon> getMyAvailableCoupons(Long uid) {
         Date now = new Date();
         return this.couponRepository.findMyAvailable(uid, now);
