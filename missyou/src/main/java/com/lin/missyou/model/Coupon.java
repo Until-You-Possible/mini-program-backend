@@ -30,7 +30,6 @@ public class Coupon extends BaseEntity {
     private String remark;
     private Boolean wholeStore;
 
-    // 优惠券和spu之间是多对多的关系
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "couponList")
     private List<Category> categoryList;
 

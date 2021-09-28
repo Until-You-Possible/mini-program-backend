@@ -26,7 +26,6 @@ public class Activity extends BaseEntity{
     private String name;
 
 
-    // 优惠券直接关联活动
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "activityId")
     private List<Coupon> couponList;

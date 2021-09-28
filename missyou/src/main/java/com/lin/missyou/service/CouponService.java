@@ -8,6 +8,7 @@ import com.lin.missyou.model.Coupon;
 import com.lin.missyou.model.UserCoupon;
 import com.lin.missyou.repository.ActivityRepository;
 import com.lin.missyou.repository.CouponRepository;
+import com.lin.missyou.repository.UserCouponRepository;
 import com.lin.missyou.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class CouponService {
     @Autowired
     private ActivityRepository activityRepository;
 
+    @Autowired
+    private UserCouponRepository userCouponRepository;
+
     public List<Coupon> getCategory(long cid) {
         Date now = new Date();
         return couponRepository.findByCategory(cid, now);
@@ -36,7 +40,24 @@ public class CouponService {
 
     public void collectOneCoupon(Long uid, Long couponId) {
         // 查询一次数据库 检验couponId是否对应一张优惠券
-        this.couponRepository.findById(couponId).orElseThrow(() -> new NotFoundException(40005));
+        this.couponRepository.findById(couponId).orElseThrow(() -> new NotFoundException(40003));
+        // 如果存在 查看优惠券的时间
+        // 领取时间(是否能领取，没到时间不能领取)
+        // 领取时间和活动关联
+        Activity activity = activityRepository.findByCouponListId(couponId).orElseThrow(() -> new NotFoundException(40001));
+        Date now = new Date();
+        Boolean isIn = CommonUtil.isInTimeLine(now, activity.getStartTime(), activity.getEndTime());
+        if (!isIn) {
+            throw  new ParemeterExcepiton(40006);
+        }
+        // 如果用户领领取过，先查询是否存在
+        this.userCouponRepository.findFirstByUserIdAndCouponId(uid,couponId).orElseThrow(() -> new ParemeterExcepiton(40006));
+        // 可以正常领取的插入数据库
+        UserCoupon userCouponNew  =  new UserCoupon();
+        userCouponNew.setCouponId(couponId);
+        userCouponNew.setUserId(uid);
+        userCouponRepository.save(userCouponNew);
+
     }
 
     public List<Coupon> getMyAvailableCoupons(Long uid) {
