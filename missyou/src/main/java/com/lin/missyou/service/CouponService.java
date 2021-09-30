@@ -10,7 +10,6 @@ import com.lin.missyou.repository.ActivityRepository;
 import com.lin.missyou.repository.CouponRepository;
 import com.lin.missyou.repository.UserCouponRepository;
 import com.lin.missyou.util.CommonUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -19,14 +18,27 @@ import java.util.List;
 @Service
 public class CouponService {
     // 从repository中查询数据
-    @Autowired
-    private CouponRepository couponRepository;
+//    @Autowired
+//    private CouponRepository couponRepository;
+//
+//    @Autowired
+//    private ActivityRepository activityRepository;
+//
+//    @Autowired
+//    private UserCouponRepository userCouponRepository;
 
-    @Autowired
-    private ActivityRepository activityRepository;
+    private final CouponRepository couponRepository;
+    private final ActivityRepository activityRepository;
+    private final UserCouponRepository userCouponRepository;
 
-    @Autowired
-    private UserCouponRepository userCouponRepository;
+    public CouponService(CouponRepository couponRepository,
+                         ActivityRepository activityRepository,
+                         UserCouponRepository userCouponRepository) {
+        this.couponRepository = couponRepository;
+        this.activityRepository = activityRepository;
+        this.userCouponRepository = userCouponRepository;
+    }
+
 
     public List<Coupon> getCategory(long cid) {
         Date now = new Date();

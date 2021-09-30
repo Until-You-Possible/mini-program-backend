@@ -5,7 +5,6 @@ import com.lin.missyou.exception.Http.NotFoundException;
 import com.lin.missyou.model.Theme;
 import com.lin.missyou.service.ThemeService;
 import com.lin.missyou.vo.ThemePureVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,8 +16,12 @@ import java.util.Optional;
 @RequestMapping("theme")
 public class ThemeController {
 
-    @Autowired
-    private ThemeService themeService;
+    private final ThemeService themeService;
+
+    public ThemeController(ThemeService themeService) {
+        this.themeService = themeService;
+    }
+
     // 提供两个接口
     @GetMapping("/by/names")
     public List<ThemePureVO> getThemeGroupByNames(@RequestParam(name = "names") String names) {

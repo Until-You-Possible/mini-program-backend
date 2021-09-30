@@ -7,8 +7,6 @@ import com.lin.missyou.model.GridCategory;
 import com.lin.missyou.service.CategoryService;
 import com.lin.missyou.service.GridCategoryService;
 import com.lin.missyou.vo.CategoryAllVO;
-import com.lin.missyou.vo.CategoryPureVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,11 +17,14 @@ import java.util.Map;
 @ResponseBody
 public class CategoryController {
 
-    @Autowired
-    private  CategoryService categoryService;
+    private final CategoryService categoryService;
 
-    @Autowired
-    private GridCategoryService gridCategoryService;
+    private final GridCategoryService gridCategoryService;
+
+    public CategoryController(CategoryService categoryService, GridCategoryService gridCategoryService) {
+        this.categoryService = categoryService;
+        this.gridCategoryService = gridCategoryService;
+    }
 
     @GetMapping("/all")
     public CategoryAllVO getAll () {

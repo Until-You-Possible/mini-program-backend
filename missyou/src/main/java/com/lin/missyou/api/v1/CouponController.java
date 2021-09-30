@@ -20,8 +20,11 @@ import java.util.stream.Collectors;
 @ResponseBody
 public class CouponController {
 
-    @Autowired
-    private CouponService couponService;
+    private final CouponService couponService;
+
+    public CouponController(CouponService couponService) {
+        this.couponService = couponService;
+    }
 
     // 进入详情后查询当前spu对应的优惠券
     // 逻辑关系

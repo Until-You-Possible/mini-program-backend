@@ -6,8 +6,6 @@ import com.lin.missyou.dto.VerifyTokenDTO;
 import com.lin.missyou.exception.Http.NotFoundException;
 import com.lin.missyou.service.WxAuthenticationService;
 import com.lin.missyou.util.JwtToken;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +18,10 @@ import java.util.Map;
 @RequestMapping(value = "token")
 public class TokenController {
 
-    @Autowired
-    private WxAuthenticationService wxAuthenticationService;
+    private final WxAuthenticationService wxAuthenticationService;
+    public TokenController(WxAuthenticationService wxAuthenticationService) {
+        this.wxAuthenticationService = wxAuthenticationService;
+    }
 
     @PostMapping("/getToken")
     public Map<String, String> getToken(@RequestBody TokenDTO useData) {
