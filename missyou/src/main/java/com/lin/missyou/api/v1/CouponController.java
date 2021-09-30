@@ -48,7 +48,7 @@ public class CouponController {
     @ScopeLevel()
     @PostMapping("/collect/{id}")
     public void collectCoupon(@PathVariable Long id) {
-        Long uid = LocalUser.getUser().getId();
+        Long uid =  LocalUser.getUser().getId();
         couponService.collectOneCoupon(uid, id);
         UnifyResponse.createSuccess(0);
     }

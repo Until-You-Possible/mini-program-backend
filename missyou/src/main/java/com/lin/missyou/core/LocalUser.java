@@ -21,14 +21,12 @@ public class LocalUser {
     }
     public static User getUser() {
         Map<String, Object> map = LocalUser.mapThreadLocal.get();
-        User user = (User) map.get("user");
-        return user;
+        return (User) map.get("user");
     }
 
     public static Integer getScoped() {
         Map<String, Object> map = LocalUser.mapThreadLocal.get();
-        Integer scope = (Integer) map.get("scope");
-        return scope;
+        return (Integer) map.get("scope");
     }
 
 }

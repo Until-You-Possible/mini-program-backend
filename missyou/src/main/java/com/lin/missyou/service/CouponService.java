@@ -13,7 +13,6 @@ import com.lin.missyou.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 
@@ -53,9 +52,10 @@ public class CouponService {
         // 如果用户领领取过，先查询是否存在
         this.userCouponRepository.findFirstByUserIdAndCouponId(uid,couponId).orElseThrow(() -> new ParemeterExcepiton(40006));
         // 可以正常领取的插入数据库
-        UserCoupon userCouponNew  =  new UserCoupon();
-        userCouponNew.setCouponId(couponId);
-        userCouponNew.setUserId(uid);
+        UserCoupon userCouponNew  =  UserCoupon.builder()
+                .couponId(couponId)
+                .userId(uid)
+                .build();
         userCouponRepository.save(userCouponNew);
 
     }
