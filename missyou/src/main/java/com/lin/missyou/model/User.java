@@ -1,8 +1,7 @@
 package com.lin.missyou.model;
 
 import com.lin.missyou.util.MapAndJson;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -14,6 +13,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User extends BaseEntity{
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -29,4 +31,5 @@ public class User extends BaseEntity{
     @Convert(converter = MapAndJson.class)
     @Transient
     private Map<String, Object> wxProfile;
+
 }

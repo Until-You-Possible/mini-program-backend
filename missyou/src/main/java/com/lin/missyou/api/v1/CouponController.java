@@ -18,13 +18,15 @@ import java.util.stream.Collectors;
 
 @RestController
 @ResponseBody
+@RequestMapping("/coupon")
 public class CouponController {
 
-    private final CouponService couponService;
+    @Autowired
+    private  CouponService couponService;
 
-    public CouponController(CouponService couponService) {
-        this.couponService = couponService;
-    }
+//    public CouponController(CouponService couponService) {
+//        this.couponService = couponService;
+//    }
 
     // 进入详情后查询当前spu对应的优惠券
     // 逻辑关系

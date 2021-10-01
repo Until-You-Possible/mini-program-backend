@@ -1,11 +1,12 @@
 package com.lin.missyou.core;
 
-import com.lin.missyou.exception.Http.CreateSuccess;
+import com.lin.missyou.exception.CreateSuccess;
 
 public class UnifyResponse {
 
     private int code;
-
+    private String message;
+    private String request;
 
     public static void createSuccess(int code) {
         throw new CreateSuccess(code);
@@ -21,9 +22,6 @@ public class UnifyResponse {
     public String getRequest() {
         return request;
     }
-
-    private String message;
-    private String request;
 
     public UnifyResponse(int code, String message, String request) {
         this.code = code;

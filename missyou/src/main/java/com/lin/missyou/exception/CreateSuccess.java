@@ -1,4 +1,6 @@
-package com.lin.missyou.exception.Http;
+package com.lin.missyou.exception;
+
+import com.lin.missyou.exception.Http.HttpException;
 
 public class CreateSuccess extends HttpException {
     public CreateSuccess(int code){

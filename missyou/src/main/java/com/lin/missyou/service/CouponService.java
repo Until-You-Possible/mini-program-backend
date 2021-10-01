@@ -1,6 +1,7 @@
 package com.lin.missyou.service;
 
 
+import com.lin.missyou.core.enumeration.CouponStatus;
 import com.lin.missyou.exception.Http.NotFoundException;
 import com.lin.missyou.exception.Http.ParemeterExcepiton;
 import com.lin.missyou.model.Activity;
@@ -62,11 +63,14 @@ public class CouponService {
             throw  new ParemeterExcepiton(40006);
         }
         // 如果用户领领取过，先查询是否存在
-        this.userCouponRepository.findFirstByUserIdAndCouponId(uid,couponId).orElseThrow(() -> new ParemeterExcepiton(40006));
+        this.userCouponRepository.findFirstByUserIdAndCouponId(uid,couponId)
+                .ifPresent((uc) -> { throw new ParemeterExcepiton(40006);});
         // 可以正常领取的插入数据库
         UserCoupon userCouponNew  =  UserCoupon.builder()
                 .couponId(couponId)
                 .userId(uid)
+                .status(CouponStatus.AVAILABLE.getValue())
+                .createTime(now)
                 .build();
         userCouponRepository.save(userCouponNew);
 

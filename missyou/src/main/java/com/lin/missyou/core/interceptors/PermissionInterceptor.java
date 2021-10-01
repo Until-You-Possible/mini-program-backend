@@ -8,10 +8,13 @@ import com.lin.missyou.model.User;
 import com.lin.missyou.service.UserService;
 import com.lin.missyou.util.JwtToken;
 import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +25,7 @@ import java.util.Optional;
 public class PermissionInterceptor implements AsyncHandlerInterceptor {
 
     //查询数据库 查User
+    @Autowired
     private UserService userService;
 
     @Override
@@ -52,13 +56,16 @@ public class PermissionInterceptor implements AsyncHandlerInterceptor {
         Optional<Map<String, Claim>> optionalStringClaimMap = JwtToken.getClaim(realToken);
         Map<String, Claim> map = optionalStringClaimMap.orElseThrow(() -> new UnAuthenticatedException(10004));
         Boolean valid = this.hasPermission(scopeLevel.get(), map);
+        if (valid) {
+            this.setToLocalUser(map);
+        }
         return  valid;
     }
 
     private  void setToLocalUser(Map<String, Claim> map) {
         Long uid = map.get("uid").asLong();
         Integer scope = map.get("scope").asInt();
-        User user = userService.getUserById(uid);
+        User user = this.userService.getUserById(uid);
         LocalUser.set(user, scope);
     }
 

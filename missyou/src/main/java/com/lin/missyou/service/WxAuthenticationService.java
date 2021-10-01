@@ -59,8 +59,7 @@ public class WxAuthenticationService {
             return JwtToken.makeToken(optionalUser.get().getId());
         }
         // 获取的openid写入实体存入数据库
-        User user  = new User();
-        user.setOpenid(openid);
+        User user  = User.builder().openid(openid).build();
         userRepository.save(user);
         Long uid = user.getId();
         // 返回jwt令牌
