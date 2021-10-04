@@ -86,4 +86,9 @@ public class CouponService {
         return this.couponRepository.findMyUsed(uid, now);
     }
 
+    public List<Coupon> getMyExpiredCoupons(Long uid) {
+        Date now = new Date();
+        return this.couponRepository.findMyExpired(uid, now);
+    }
+
 }

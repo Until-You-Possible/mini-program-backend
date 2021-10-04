@@ -3,7 +3,9 @@ package com.lin.missyou.api.v1;
 
 import com.lin.missyou.core.LocalUser;
 import com.lin.missyou.core.UnifyResponse;
+import com.lin.missyou.core.enumeration.CouponStatus;
 import com.lin.missyou.core.interceptors.ScopeLevel;
+import com.lin.missyou.exception.Http.ParemeterExcepiton;
 import com.lin.missyou.model.Coupon;
 import com.lin.missyou.model.User;
 import com.lin.missyou.service.CouponService;
@@ -21,12 +23,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/coupon")
 public class CouponController {
 
-    @Autowired
-    private  CouponService couponService;
+    private final   CouponService couponService;
 
-//    public CouponController(CouponService couponService) {
-//        this.couponService = couponService;
-//    }
+    public CouponController(CouponService couponService) {
+        this.couponService = couponService;
+    }
 
     // 进入详情后查询当前spu对应的优惠券
     // 逻辑关系
@@ -58,28 +59,28 @@ public class CouponController {
         UnifyResponse.createSuccess(0);
     }
 
-//    @ScopeLevel
-//    @GetMapping("/myself/by/status/{status}")
-//    public List<CouponPureVO> getMyCouponByStatus(@PathVariable Integer status) {
-//        Long uid = LocalUser.getUser().getId();
-//        List<Coupon> couponList;
-//
-//        //触发机制 时机 过期
-//        switch (CouponStatus.toType(status)) {
-//            case AVAILABLE:
-//                couponList = couponService.getMyAvailableCoupons(uid);
-//                break;
-//            case USED:
-//                couponList = couponService.getMyUsedCoupons(uid);
-//                break;
-//            case EXPIRED:
-//                couponList = couponService.getMyExpiredCoupons(uid);
-//                break;
-//            default:
-//                throw new ParameterException(40001);
-//        }
-//        return CouponPureVO.getList(couponList);
-//    }
+    @ScopeLevel
+    @GetMapping("/myself/by/status/{status}")
+    public List<CouponPureVO> getMyCouponByStatus(@PathVariable Integer status) {
+        Long uid = LocalUser.getUser().getId();
+        List<Coupon> couponList;
+
+        //触发机制 时机 过期
+        switch (CouponStatus.toType(status)) {
+            case AVAILABLE:
+                couponList = couponService.getMyAvailableCoupons(uid);
+                break;
+            case USED:
+                couponList = couponService.getMyUsedCoupons(uid);
+                break;
+            case EXPIRED:
+                couponList = couponService.getMyExpiredCoupons(uid);
+                break;
+            default:
+                throw new ParemeterExcepiton(40001);
+        }
+        return CouponPureVO.getList(couponList);
+    }
 
     @ScopeLevel()
     @GetMapping("/myself/available/with_category")
