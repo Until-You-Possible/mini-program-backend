@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/coupon")
 public class CouponController {
 
-    private final   CouponService couponService;
+    private final    CouponService couponService;
 
     public CouponController(CouponService couponService) {
         this.couponService = couponService;
