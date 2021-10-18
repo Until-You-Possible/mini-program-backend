@@ -103,7 +103,7 @@ public class PermissionInterceptor implements AsyncHandlerInterceptor {
         }
         return Optional.empty();
     }
-    // 获取token
+    // 获取前端带回的token
     private String getToken(HttpServletRequest request) {
         return request.getHeader("Authorization");
     }

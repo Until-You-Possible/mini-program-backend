@@ -71,7 +71,7 @@ jwt的header承载两部分的内容
 
 ```javascript
 {
-    "type": "jwt",
+    "typ": "jwt",
     "alg": "HS256"
 }
 ```
