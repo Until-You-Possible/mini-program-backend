@@ -3,6 +3,7 @@ package com.lin.missyou.api.v1;
 
 import com.lin.missyou.dto.TokenDTO;
 import com.lin.missyou.dto.VerifyTokenDTO;
+import com.lin.missyou.dto.doubleTokenDTO;
 import com.lin.missyou.exception.Http.NotFoundException;
 import com.lin.missyou.service.WxAuthenticationService;
 import com.lin.missyou.util.JwtToken;
@@ -47,6 +48,26 @@ public class TokenController {
         String token = tokenDTO.getToken();
         Map<String, Boolean> map = new HashMap<>();
         map.put("is_valid", JwtToken.verifyToken(token));
+        return map;
+    }
+    // 获取双令牌
+    @PostMapping("/getDoubleToken")
+    public Map<String, String> getDoubleToken(@RequestBody TokenDTO useData) {
+        Map<String, String> map = new HashMap<>();
+        String access_token = null;
+        String refresh_token = null;
+        switch (useData.getType()) {
+            case USER_WX:
+                access_token = wxAuthenticationService.code2Session(useData.getAccount());
+//                refresh_token = wxAuthenticationService.code2Session(useData.getAccount());
+                break;
+            case USER_Email:
+                break;
+            default:
+                throw new NotFoundException(10003);
+        }
+        map.put("access_token", access_token);
+        map.put("refresh_token", "refresh_token");
         return map;
     }
 

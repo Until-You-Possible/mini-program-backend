@@ -50,9 +50,7 @@ public class JwtToken {
         return Optional.of(decodedJWT.getClaims());
     }
 
-
     public static String getToken(Long uid, Integer scoped) {
-        // jjwt
         //auth0
         Algorithm algorithm = Algorithm.HMAC256(JwtToken.jwtKey);
         Map<String, Date> map = JwtToken.calculateExpiredIssues();
@@ -76,6 +74,7 @@ public class JwtToken {
         return true;
     }
 
+    // set expired time
     private static Map<String, Date> calculateExpiredIssues() {
         Map<String, Date> map = new HashMap<>();
         Calendar calendar = Calendar.getInstance();
