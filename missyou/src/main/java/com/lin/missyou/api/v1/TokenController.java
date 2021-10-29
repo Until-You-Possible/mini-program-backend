@@ -58,7 +58,7 @@ public class TokenController {
         String refresh_token = null;
         switch (useData.getType()) {
             case USER_WX:
-                access_token = wxAuthenticationService.code2Session(useData.getAccount());
+//                access_token = wxAuthenticationService.code2Session(useData.getAccount());
 //                refresh_token = wxAuthenticationService.code2Session(useData.getAccount());
                 break;
             case USER_Email:
@@ -66,7 +66,7 @@ public class TokenController {
             default:
                 throw new NotFoundException(10003);
         }
-        map.put("access_token", access_token);
+        map.put("access_token", "access_token");
         map.put("refresh_token", "refresh_token");
         return map;
     }

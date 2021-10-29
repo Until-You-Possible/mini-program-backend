@@ -23,6 +23,4 @@ public enum CouponStatus {
                 .findAny()
                 .orElse(null);
     }
-
-
 }
