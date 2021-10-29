@@ -36,25 +36,24 @@ public class BannerController {
     // 获取从当前年开始 向前5年的日期
     @GetMapping("/test/date")
     public List<List<String>> getDateRange() {
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-//        Date date = new Date(System.currentTimeMillis());
-//        String currentDate = simpleDateFormat.format(date);
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(new Date());
-//        calendar.add(Calendar.YEAR, -1);
-//        Date y = calendar.getTime();
-//        return simpleDateFormat.format(y);
         return this.getRangeDate();
-
     }
 
-//    public List<String> dateStringList() {
-//        List<String> list = this.getDateRange();
-//        List<String> stringList = new ArrayList<>();
-//        for (int i = 0; i < list.size(); i++) {
-//            stringList.add(this.URL + "?" + )
-//        }
-//    }
+    @GetMapping("/date/list")
+    public List<String> dateStringList() {
+        List<List<String>> lists = this.getDateRange();
+        List<String> stringList = new ArrayList<>();
+        for (List<String> list : lists) {
+            if (list.size() == 1) {
+                return stringList;
+            } else {
+                String t2 = list.get(0);
+                String t1 = list.get(1);
+                stringList.add(this.URL + "?" + "t1=" + t1 + "&" + "t2=" + t2);
+            }
+        }
+        return stringList;
+    }
 
     public String getPreviousYear(Integer number) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
