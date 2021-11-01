@@ -33,12 +33,45 @@ public class BannerController {
         return banner;
     }
 
-    // 获取从当前年开始 向前5年的日期
+
+    @GetMapping("/test/date2")
+    public List<String> getDateRange2() {
+        return this.getRangeDate2();
+    }
+
+    public List<String> getRangeDate2 () {
+        List<String> stringList2 = new ArrayList<>();
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        int earliestDate = 1996;
+        int dateRange = currentYear - earliestDate;
+        for (int i = 0; i < dateRange; i++) {
+            stringList2.add(this.getPreviousYear(i));
+        }
+        Collections.sort(stringList2);
+        return this.testChange(stringList2);
+    }
+
+    public List<String> testChange(List<String> stringList2) {
+        List<String> listChange = new ArrayList<>();
+        for (int i = 0; i < stringList2.size(); i++) {
+            if(i == stringList2.size() -1) {
+                break;
+            }
+            String t2 = stringList2.get(i+1);
+            String t1 = stringList2.get(i);
+
+            if (t1 != null) {
+                listChange.add(this.URL + "?" + "t1=" + t1 + "&" + "t2=" + t2);
+            }
+        }
+        return listChange;
+    }
+
+
     @GetMapping("/test/date")
     public List<List<String>> getDateRange() {
         return this.getRangeDate();
     }
-
     @GetMapping("/date/list")
     public List<String> dateStringList() {
         List<List<String>> lists = this.getDateRange();
