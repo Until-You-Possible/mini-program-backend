@@ -50,26 +50,6 @@ public class TokenController {
         map.put("is_valid", JwtToken.verifyToken(token));
         return map;
     }
-    // 获取双令牌
-    @PostMapping("/getDoubleToken")
-    public Map<String, String> getDoubleToken(@RequestBody TokenDTO useData) {
-        Map<String, String> map = new HashMap<>();
-        String access_token = null;
-        String refresh_token = null;
-        switch (useData.getType()) {
-            case USER_WX:
-                access_token = wxAuthenticationService.code2Session(useData.getAccount());
-//                refresh_token = wxAuthenticationService.code2Session(useData.getAccount());
-                break;
-            case USER_Email:
-                break;
-            default:
-                throw new NotFoundException(10003);
-        }
-        map.put("access_token", access_token);
-        map.put("refresh_token", "refresh_token");
-        return map;
-    }
 
 
 }
