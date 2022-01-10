@@ -39,12 +39,17 @@ public class BannerController {
         return this.getRangeDate2();
     }
 
+    @GetMapping("/test/getListLength")
+    public Integer getListLength() {
+        return this.getDateRange2().size();
+    }
+
     public List<String> getRangeDate2 () {
         List<String> stringList2 = new ArrayList<>();
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        int earliestDate = 1996;
+        int earliestDate = 1997;
         int dateRange = currentYear - earliestDate;
-        for (int i = 0; i < dateRange; i++) {
+        for (int i = 0; i <= dateRange; i++) {
             stringList2.add(this.getPreviousYear(i));
         }
         Collections.sort(stringList2);
@@ -53,16 +58,10 @@ public class BannerController {
 
     public List<String> testChange(List<String> stringList2) {
         List<String> listChange = new ArrayList<>();
-        for (int i = 0; i < stringList2.size(); i++) {
-            if(i == stringList2.size() -1) {
-                break;
-            }
+        for (int i = 0; i < stringList2.size() -1; i++) {
             String t2 = stringList2.get(i+1);
             String t1 = stringList2.get(i);
-
-            if (t1 != null) {
-                listChange.add(this.URL + "?" + "t1=" + t1 + "&" + "t2=" + t2);
-            }
+            listChange.add(this.URL + "?" + "t1=" + t1 + "&" + "t2=" + t2);
         }
         return listChange;
     }

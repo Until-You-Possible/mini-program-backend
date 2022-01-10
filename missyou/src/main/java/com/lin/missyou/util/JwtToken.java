@@ -20,6 +20,7 @@ public class JwtToken {
     private static Integer expiredTimeIn;
     private static Integer defaultScope = 8;
 
+    // 读取私有key
     @Value("${missyou.security.jwt-key}")
     public void setJwtKey(String jwtKey) {
         JwtToken.jwtKey = jwtKey;
